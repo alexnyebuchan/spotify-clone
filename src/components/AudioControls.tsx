@@ -6,7 +6,12 @@ import styles from '../scss/AudioControls.module.scss';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { faPause, faPlay } from '@fortawesome/free-solid-svg-icons';
+import {
+  faPause,
+  faPlay,
+  faForwardStep,
+  faBackwardStep,
+} from '@fortawesome/free-solid-svg-icons';
 
 const AudioControls = () => {
   //State
@@ -93,34 +98,43 @@ const AudioControls = () => {
         preload="metadata"
         id="audioFile"
       />
-      <button className={styles.playPause} onClick={togglePlayPause}>
-        {state.playing ? (
-          <FontAwesomeIcon id="faIcon" target="_blank" icon={faPause} />
-        ) : (
-          <FontAwesomeIcon
-            className={styles.play}
-            id="faIcon"
-            target="_blank"
-            icon={faPlay}
+      <div className={styles.controls}>
+        <button className={styles.step}>
+          <FontAwesomeIcon id="faIcon" target="_blank" icon={faBackwardStep} />
+        </button>
+        <button className={styles.playPause} onClick={togglePlayPause}>
+          {state.playing ? (
+            <FontAwesomeIcon id="faIcon" target="_blank" icon={faPause} />
+          ) : (
+            <FontAwesomeIcon
+              className={styles.play}
+              id="faIcon"
+              target="_blank"
+              icon={faPlay}
+            />
+          )}
+        </button>
+        <button className={styles.step}>
+          <FontAwesomeIcon id="faIcon" target="_blank" icon={faForwardStep} />
+        </button>
+      </div>
+      <div className={styles.bar}>
+        <span className={styles.currentTime}>{calculateTime(currentTime)}</span>
+
+        <span>
+          <input
+            className={styles.progressBar}
+            type="range"
+            defaultValue="0"
+            ref={progressBar}
+            onChange={changeRange}
           />
-        )}
-      </button>
+        </span>
 
-      <span className={styles.currentTime}>{calculateTime(currentTime)}</span>
-
-      <span>
-        <input
-          className={styles.progressBar}
-          type="range"
-          defaultValue="0"
-          ref={progressBar}
-          onChange={changeRange}
-        />
-      </span>
-
-      <span className={styles.duration}>
-        {!isNaN(duration) && calculateTime(duration)}
-      </span>
+        <span className={styles.duration}>
+          {!isNaN(duration) && calculateTime(duration)}
+        </span>
+      </div>
     </div>
   );
 };

@@ -8,21 +8,17 @@ import { faVolumeHigh, faVolumeMute } from '@fortawesome/free-solid-svg-icons';
 
 const AudioAdditional = () => {
   const [volume, setVolume] = useState(100);
-  const [showVolume, setShowVolume] = useState(false);
 
   const handleVolumeChange = (event) => {
     setVolume(event.target.value);
-    // audioPlayer.current.volume = event.target.value / 100;
+    audioPlayer.current.volume = event.target.value / 100;
   };
+  console.log(volume);
 
-  const handleVolumeButton = () => {
-    const prevValue = showVolume;
-    setShowVolume(!prevValue);
-  };
   return (
     <div className={styles.Vol}>
       <div>
-        <a onClick={handleVolumeButton}>
+        <a>
           {volume > 0 ? (
             <FontAwesomeIcon
               className={styles.volumeBtn}
@@ -39,19 +35,16 @@ const AudioAdditional = () => {
             />
           )}
         </a>
-
-        {showVolume && (
-          <span className={styles.volume}>
-            <input
-              className={styles.volumeInput}
-              type="range"
-              min="0"
-              max="100"
-              value={volume}
-              onChange={handleVolumeChange}
-            />
-          </span>
-        )}
+        <span className={styles.volume}>
+          <input
+            className={styles.volumeInput}
+            type="range"
+            min="0"
+            max="100"
+            value={volume}
+            onChange={handleVolumeChange}
+          />
+        </span>
       </div>
     </div>
   );
