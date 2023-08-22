@@ -1,0 +1,14 @@
+@import './colours.module';
+
+.container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  background-color: $black;
+  display: flex;
+  flex-direction: row;
+  padding: 20px;
+}

@@ -1,0 +1,54 @@
+@import './colours.module';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  a {
+    color: $light-grey;
+    &:hover {
+      color: white;
+    }
+  }
+}
+
+.nav,
+.library {
+  display: flex;
+  flex-direction: column;
+  background-color: $bg-grey;
+}
+
+.library {
+  margin-top: 10px;
+  height: 100%;
+  border-radius: 1%;
+}
+
+.nav {
+  border-radius: 4%;
+}
+
+.navItems {
+  display: flex;
+  flex-direction: column;
+  padding-block: 20px;
+  font-size: 19px;
+}
+
+.type {
+  margin: 10px;
+  a {
+    padding: 10px;
+    margin-right: 5px;
+    background-color: $btn-grey;
+    border-radius: 40%;
+    color: white;
+  }
+}
+
+.recents {
+  display: flex;
+  justify-content: space-between;
+  padding-inline: 20px;
+}

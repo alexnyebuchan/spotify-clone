@@ -1,0 +1,40 @@
+@import './colours.module';
+
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  img {
+    height: 70px;
+    width: 70px;
+  }
+  section {
+    padding-inline: 10px;
+  }
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  color: $white;
+  &:hover {
+    color: $white;
+    text-decoration: underline;
+  }
+}
+
+.artist {
+  color: $light-grey;
+  font-size: small;
+  &:hover {
+    color: $white;
+    text-decoration: underline;
+  }
+}
+
+.heart {
+  color: $light-grey;
+}
