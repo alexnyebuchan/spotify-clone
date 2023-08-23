@@ -11,6 +11,8 @@ import {
   faPlay,
   faForwardStep,
   faBackwardStep,
+  faShuffle,
+  faRepeat,
 } from '@fortawesome/free-solid-svg-icons';
 
 const AudioControls = () => {
@@ -99,6 +101,9 @@ const AudioControls = () => {
         id="audioFile"
       />
       <div className={styles.controls}>
+        <button className={styles.que}>
+          <FontAwesomeIcon id="faIcon" target="_blank" icon={faShuffle} />
+        </button>
         <button className={styles.step}>
           <FontAwesomeIcon id="faIcon" target="_blank" icon={faBackwardStep} />
         </button>
@@ -116,6 +121,9 @@ const AudioControls = () => {
         </button>
         <button className={styles.step}>
           <FontAwesomeIcon id="faIcon" target="_blank" icon={faForwardStep} />
+        </button>
+        <button className={styles.que}>
+          <FontAwesomeIcon id="faIcon" target="_blank" icon={faRepeat} />
         </button>
       </div>
       <div className={styles.bar}>

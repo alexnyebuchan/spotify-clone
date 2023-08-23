@@ -2,7 +2,12 @@ import styles from '../scss/Sidebar.module.scss';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { faSearch, faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import {
+  faSearch,
+  faCaretDown,
+  faPlus,
+  faArrowRight,
+} from '@fortawesome/free-solid-svg-icons';
 
 const Sidebar = () => {
   return (
@@ -15,9 +20,23 @@ const Sidebar = () => {
       </section>
       <section className={styles.library}>
         <div>
-          <div>
+          <span>
             <a href="/">Your Library</a>
-          </div>
+            <div>
+              <FontAwesomeIcon
+                className={styles.libraryOptions}
+                id="faIcon"
+                target="_blank"
+                icon={faPlus}
+              />
+              <FontAwesomeIcon
+                className={styles.libraryOptions}
+                id="faIcon"
+                target="_blank"
+                icon={faArrowRight}
+              />
+            </div>
+          </span>
           <div className={styles.type}>
             <a href="/">Playlists</a>
             <a href="/">Artists</a>

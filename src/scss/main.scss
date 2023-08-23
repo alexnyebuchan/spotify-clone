@@ -16,7 +16,9 @@ body {
   color: $white;
   font-family: 'Circular', sans-serif;
   a {
-    color: $green;
+    &:hover {
+      transition: color 0.2s ease;
+    }
   }
   input {
     color: $white;
