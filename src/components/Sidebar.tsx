@@ -1,5 +1,9 @@
 import styles from '../scss/Sidebar.module.scss';
 
+import data from '../../testData.js';
+
+import LibraryItem from './LibraryItem';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import {
@@ -62,7 +66,11 @@ const Sidebar = () => {
               />
             </a>
           </div>
-          <div>Playlists and albums</div>
+          <div>
+            {data.map((item) => (
+              <LibraryItem key={item.id} item={item} />
+            ))}
+          </div>
         </div>
       </section>
     </div>

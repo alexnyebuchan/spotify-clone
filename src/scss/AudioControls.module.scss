@@ -24,10 +24,6 @@
   }
 }
 
-.playPause:hover {
-  // Add toggle menu
-}
-
 .play {
   position: relative;
   left: 2px;
@@ -35,7 +31,7 @@
 
 .currentTime .duration {
   font-size: 15px;
-  padding: 10px 0;
+  padding: 20px 0;
 }
 
 .controls {

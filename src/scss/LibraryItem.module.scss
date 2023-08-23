@@ -1,0 +1,50 @@
+@import './colours.module';
+
+.container {
+  margin-block: 10px;
+  display: flex;
+  align-items: center;
+  height: 80px;
+  padding: 10px;
+  border-radius: 4%;
+  transition: background-color 0.1s ease;
+  img {
+    height: 65px;
+    margin-right: 20px;
+  }
+  section {
+    display: flex;
+  }
+
+  &:hover {
+    background-color: hsl(0, 0, 20%);
+  }
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  color: $white !important;
+  font-size: 19px;
+}
+
+.secondary {
+  color: $light-grey;
+  font-size: 14px;
+  &:hover {
+    color: $light-grey !important;
+  }
+}
+
+.periodContainer {
+  display: inline-block;
+  padding-inline: 7px;
+}
+
+.period {
+  font-size: 5px;
+  margin-bottom: 2px;
+}

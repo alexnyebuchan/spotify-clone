@@ -127,7 +127,7 @@ const AudioControls = () => {
         </button>
       </div>
       <div className={styles.bar}>
-        <span className={styles.currentTime}>{calculateTime(currentTime)}</span>
+        <text className={styles.currentTime}>{calculateTime(currentTime)}</text>
 
         <span>
           <input
@@ -139,9 +139,9 @@ const AudioControls = () => {
           />
         </span>
 
-        <span className={styles.duration}>
+        <text className={styles.duration}>
           {!isNaN(duration) && calculateTime(duration)}
-        </span>
+        </text>
       </div>
     </div>
   );
