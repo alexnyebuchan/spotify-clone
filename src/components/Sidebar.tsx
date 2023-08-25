@@ -11,6 +11,8 @@ import {
   faCaretDown,
   faPlus,
   faArrowRight,
+  faHouse,
+  faMagnifyingGlass,
 } from '@fortawesome/free-solid-svg-icons';
 
 const Sidebar = () => {
@@ -18,14 +20,32 @@ const Sidebar = () => {
     <div className={styles.container}>
       <section className={styles.nav}>
         <div className={styles.navItems}>
-          <a href="/">Home</a>
-          <a href="/">Search</a>
+          <a href="/">
+            <FontAwesomeIcon
+              className={styles.houseIcon}
+              id="faIcon"
+              target="_blank"
+              icon={faHouse}
+            />
+            Home
+          </a>
+          <a href="/">
+            <FontAwesomeIcon
+              className={styles.magIcon}
+              id="faIcon"
+              target="_blank"
+              icon={faMagnifyingGlass}
+            />
+            Search
+          </a>
         </div>
       </section>
       <section className={styles.library}>
         <div>
           <span>
-            <a href="/">Your Library</a>
+            <a className={styles.yourLibrary} href="/">
+              Your Library
+            </a>
             <div>
               <FontAwesomeIcon
                 className={styles.libraryOptions}

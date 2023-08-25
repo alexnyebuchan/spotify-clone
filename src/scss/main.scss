@@ -23,4 +23,9 @@ body {
   input {
     color: $white;
   }
+  button {
+    &:focus {
+      outline: none;
+    }
+  }
 }

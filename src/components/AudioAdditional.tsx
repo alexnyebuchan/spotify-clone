@@ -13,7 +13,6 @@ const AudioAdditional = () => {
     setVolume(event.target.value);
     audioPlayer.current.volume = event.target.value / 100;
   };
-  console.log(volume);
 
   return (
     <div className={styles.Vol}>

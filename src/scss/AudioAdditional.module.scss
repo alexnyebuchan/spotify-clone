@@ -1,29 +1,26 @@
 @import './colours.module';
 
-.volume {
-  position: absolute;
-}
-
 .volumeInput {
-  --bar-bg: $bg-grey;
+  --bar-bg: $white;
   --seek-before-width: 50px;
   --seek-before-color: $light-grey;
   --thumb-color: $white;
   --thumb-selected: $white;
+
   appearance: none;
   background: $mid-grey;
   border-radius: 10px;
   border: 1px solid black;
   left: 6px;
   bottom: 57px;
-  width: 70px;
-  height: 11px;
+  width: 100px;
+  height: 8px;
 }
 
 .volumeInput::-webkit-slider-thumb {
   -webkit-appearance: none;
-  height: 18px;
-  width: 18px;
+  height: 10px;
+  width: 10px;
   border-radius: 50%;
   border: none;
   background: $white;
