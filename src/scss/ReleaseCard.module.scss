@@ -1,0 +1,30 @@
+@import './colours.module';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  background-color: $mid-grey;
+  border-radius: 3%;
+  padding: 13px;
+  margin-inline: 3px;
+  height: 100%;
+  transition: background-color 0.3s ease;
+  img {
+    height: 160px;
+  }
+
+  h5,
+  p {
+    font-size: 17px;
+    line-height: 0;
+  }
+  h5 {
+    color: $white;
+  }
+  p {
+    color: $light-grey;
+  }
+  &:hover {
+    background-color: hsl(1, 1, 16%);
+  }
+}
