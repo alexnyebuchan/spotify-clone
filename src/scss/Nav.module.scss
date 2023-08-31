@@ -1,0 +1,29 @@
+@import './colours.module';
+
+.top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  a {
+    color: $white;
+  }
+}
+
+.chevrons {
+  a {
+    background-color: $black;
+    padding: 10px;
+    font-size: 20px;
+    margin-inline: 5px;
+    border-radius: 50%;
+  }
+}
+
+.install {
+  a {
+  }
+}
+
+.downloadIcon {
+  margin-right: 5px;
+}

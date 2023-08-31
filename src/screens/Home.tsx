@@ -1,20 +1,13 @@
 import styles from '../scss/Home.module.scss';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import testImg from '../../public/images/test/a7.jpg';
 
 import podcastData from '../../yourShows.js';
 import albumData from '../../albumData.js';
 import recentlyPlayed from '../../recentlyPlayed.js';
 
-import {
-  faChevronLeft,
-  faChevronRight,
-} from '@fortawesome/free-solid-svg-icons';
-
-import { faCircleDown } from '@fortawesome/free-regular-svg-icons';
 import ReleaseCard from '../components/ReleaseCard.js';
+import Nav from '../components/Nav.tsx';
 
 const Home = () => {
   const currentTime = new Date();
@@ -31,37 +24,7 @@ const Home = () => {
 
   return (
     <div className={styles.container}>
-      <section className={styles.top}>
-        <div className={styles.chevrons}>
-          <a href="/">
-            <FontAwesomeIcon
-              className={styles.chevron}
-              id="faIcon"
-              target="_blank"
-              icon={faChevronLeft}
-            />
-          </a>
-          <a href="/">
-            <FontAwesomeIcon
-              className={styles.chevron}
-              id="faIcon"
-              target="_blank"
-              icon={faChevronRight}
-            />
-          </a>
-        </div>
-        <div className={styles.install}>
-          <a href="/">
-            <FontAwesomeIcon
-              className={styles.downloadIcon}
-              id="faIcon"
-              target="_blank"
-              icon={faCircleDown}
-            />
-            Install App
-          </a>
-        </div>
-      </section>
+      <Nav />
       <section className={styles.welcome}>
         <h4>{greeting}</h4>
       </section>
@@ -122,7 +85,7 @@ const Home = () => {
       <section className={styles.releaseSection}>
         <h2>Recently Played</h2>
         <div className={styles.cardsContainer}>
-          {albumData.map((album) => (
+          {recentlyPlayed.map((album) => (
             <ReleaseCard
               key={album.id}
               image={album.image}

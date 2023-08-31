@@ -7,13 +7,13 @@ const albumData = [
   },
   {
     image: '../../public/images/test/a7.jpg',
-    title: 'Album Title 2',
+    title: 'Recent Title 2',
     artist: 'Artist 2',
     link: 'https://example.com/album2',
   },
   {
     image: '../../public/images/test/a7.jpg',
-    title: 'Album Title 3',
+    title: 'Recent Title 3',
     artist: 'Artist 3',
     link: 'https://example.com/album3',
   },
