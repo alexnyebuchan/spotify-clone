@@ -14,40 +14,10 @@
   }
   &::-webkit-scrollbar-thumb {
     background-color: #888;
-    border-radius: 5px;
   }
   &::-webkit-scrollbar-track {
     background-color: $bg-grey;
-    border-radius: 5px;
   }
-}
-
-.top {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  a {
-    color: $white;
-  }
-}
-
-.chevrons {
-  a {
-    background-color: $black;
-    padding: 10px;
-    font-size: 20px;
-    margin-inline: 5px;
-    border-radius: 50%;
-  }
-}
-
-.install {
-  a {
-  }
-}
-
-.downloadIcon {
-  margin-right: 5px;
 }
 
 .welcome {
