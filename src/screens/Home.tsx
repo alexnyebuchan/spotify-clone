@@ -10,6 +10,7 @@ import ReleaseCard from '../components/ReleaseCard.js';
 import Nav from '../components/Nav.tsx';
 
 const Home = () => {
+  // Good (time of day)
   const currentTime = new Date();
   const currentHour = currentTime.getHours();
   let greeting;
