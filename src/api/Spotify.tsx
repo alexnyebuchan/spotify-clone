@@ -8,7 +8,10 @@ export async function redirectToAuthCodeFlow(clientId: string) {
   params.append('client_id', clientId);
   params.append('response_type', 'code');
   params.append('redirect_uri', 'http://localhost:3000');
-  params.append('scope', 'user-read-private user-read-email');
+  params.append(
+    'scope',
+    'user-read-private user-read-email user-read-recently-played'
+  );
   params.append('code_challenge_method', 'S256');
   params.append('code_challenge', challenge);
 
@@ -78,7 +81,7 @@ export async function fetchPlaylists(token: string): Promise<any> {
 
 export async function fetchRecents(token: string): Promise<any> {
   const result = await fetch(
-    'https://api.spotify.com/v1/me/player/recently-played',
+    'https://api.spotify.com/v1/me/player/recently-played?limit=50',
     {
       method: 'GET',
       headers: { Authorization: `Bearer ${token}` },

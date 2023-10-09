@@ -5,6 +5,8 @@ import Home from './screens/Home';
 
 import { useReducer, useEffect, useState } from 'react';
 import { AudioContext } from './context/AudioContext.tsx';
+import { DataContext } from './context/DataContext.tsx';
+
 import audioReducer from './context/AudioReducer.tsx';
 
 import {
@@ -18,7 +20,8 @@ import {
 function App() {
   const [profile, setProfile] = useState(null);
   const [playlists, setPlaylists] = useState(null);
-  const [recentlyPlayed, setRecentlyPlayed] = useState(null);
+  const [recents, setRecents] = useState({});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
@@ -29,19 +32,31 @@ function App() {
       if (!code) {
         redirectToAuthCodeFlow(clientId);
       } else {
-        const accessToken = await getAccessToken(clientId, code);
+        try {
+          const accessToken = await getAccessToken(clientId, code);
 
-        const profile = await fetchProfile(accessToken);
-        setProfile(profile);
+          const profileData = await fetchProfile(accessToken);
+          if (profileData.display_name) {
+            setProfile(profileData);
+          }
 
-        const playlists = await fetchPlaylists(accessToken);
-        setPlaylists(playlists);
+          const playlistsData = await fetchPlaylists(accessToken);
+          if (playlistsData.total) {
+            setPlaylists(playlistsData);
+          }
 
-        const recents = await fetchRecents(accessToken);
-        console.log(recents);
-        setRecentlyPlayed(recents);
+          const recentsData = await fetchRecents(accessToken);
+          if (recentsData.limit) {
+            setRecents(recentsData);
+          }
+        } catch (error) {
+          // console.log(error);
+        } finally {
+          setLoading(false);
+        }
       }
     }
+
     fetchData();
   }, []);
 
@@ -55,15 +70,19 @@ function App() {
   const [state, dispatch] = useReducer(audioReducer, initialState);
 
   return (
-    <>
-      <div>
-        <AudioContext.Provider value={{ state, dispatch }}>
-          <Layout>
-            <Home />
-          </Layout>
-        </AudioContext.Provider>
-      </div>
-    </>
+    <div>
+      {loading ? (
+        <div>Loading...</div>
+      ) : (
+        <DataContext.Provider value={{ profile, playlists, recents }}>
+          <AudioContext.Provider value={{ state, dispatch }}>
+            <Layout>
+              <Home />
+            </Layout>
+          </AudioContext.Provider>
+        </DataContext.Provider>
+      )}
+    </div>
   );
 }
 
