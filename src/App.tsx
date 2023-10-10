@@ -15,12 +15,14 @@ import {
   fetchProfile,
   fetchPlaylists,
   fetchRecents,
+  fetchEpisodes,
 } from './api/Spotify.tsx'; // Import your Spotify-related functions
 
 function App() {
   const [profile, setProfile] = useState(null);
   const [playlists, setPlaylists] = useState(null);
-  const [recents, setRecents] = useState({});
+  const [recents, setRecents] = useState(null);
+  const [episodes, setEpisodes] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -49,8 +51,13 @@ function App() {
           if (recentsData.limit) {
             setRecents(recentsData);
           }
+
+          const episodesData = await fetchEpisodes(accessToken);
+          if (episodesData.href) {
+            setEpisodes(episodesData);
+          }
         } catch (error) {
-          // console.log(error);
+          console.log(error);
         } finally {
           setLoading(false);
         }
@@ -74,7 +81,7 @@ function App() {
       {loading ? (
         <div>Loading...</div>
       ) : (
-        <DataContext.Provider value={{ profile, playlists, recents }}>
+        <DataContext.Provider value={{ profile, playlists, recents, episodes }}>
           <AudioContext.Provider value={{ state, dispatch }}>
             <Layout>
               <Home />
