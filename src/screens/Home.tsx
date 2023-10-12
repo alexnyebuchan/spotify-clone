@@ -25,43 +25,48 @@ const Home = () => {
     greeting = 'Good Evening';
   }
 
-  const { profile, playlists, recents, episodes } = useContext(DataContext);
+  // Function to shorten a string if it's longer than 18 characters
+  const shortenString = (str) => {
+    if (str.length > 18) {
+      return str.slice(0, 18) + '...';
+    }
+    return str;
+  };
+
+  const { profile, playlists, recents, episodes, albums } =
+    useContext(DataContext);
 
   const uniqueAlbums = new Set();
   const uniqueEpisodes = new Set();
 
   const filteredRecents = recents.items.filter((item) => {
-    let albumName = item.track.album.name;
-    if (albumName.length > 18) {
-      albumName = albumName.slice(0, 18) + '...';
-    }
-    if (!uniqueAlbums.has(albumName)) {
-      item.track.album.name = albumName;
-      uniqueAlbums.add(albumName);
+    item.track.album.name = shortenString(item.track.album.name);
+
+    if (!uniqueAlbums.has(item.track.album.name)) {
+      uniqueAlbums.add(item.track.album.name);
       return true;
     }
     return false;
   });
 
   const filteredEpisodes = episodes.items.filter((item) => {
-    let episodeName = item.episode.show.name;
+    item.episode.show.name = shortenString(item.episode.show.name);
 
-    if (episodeName.length > 18) {
-      episodeName = episodeName.slice(0, 18) + '...';
-    }
-    if (!uniqueEpisodes.has(episodeName)) {
-      item.episode.show.name = episodeName;
-      uniqueEpisodes.add(episodeName);
+    if (!uniqueEpisodes.has(item.episode.show.name)) {
+      uniqueEpisodes.add(item.episode.show.name);
       return true;
     }
     return false;
   });
 
+  const shortenedAlbums = albums.items.forEach((item) => {
+    item.album.name = shortenString(item.album.name);
+  });
+
   const sixRecents = filteredRecents.slice(0, 6);
   const jumpBackIn = filteredRecents.slice(-5);
   const yourPlaylists = playlists.items.slice(0, 5);
-  const yourShows = episodes.items.slice(0, 5);
-  console.log(filteredEpisodes);
+  const yourAlbums = albums.items.slice(0, 5);
 
   return (
     <div className={styles.container}>
@@ -78,15 +83,29 @@ const Home = () => {
         ))}
       </section>
       <section className={styles.releaseSection}>
-        <h2>Your Shows</h2>
+        <h2>Your Albums</h2>
         <div className={styles.cardsContainer}>
-          {filteredEpisodes.map((show) => (
+          {yourAlbums.map((item) => (
             <ReleaseCard
-              key={show.episode.id}
-              image={show.episode.images[0].url}
-              title={show.episode.show.name}
-              artist={show.episode.show.publisher}
-              // link={podcast.link}
+              key={item.album.id}
+              image={item.album.images[0].url}
+              title={item.album.name}
+              artist={item.album.artists[0].name}
+              // link={album.link}
+            />
+          ))}
+        </div>
+      </section>
+      <section className={styles.releaseSection}>
+        <h2>Your Playlists</h2>
+        <div className={styles.cardsContainer}>
+          {yourPlaylists.map((playlist) => (
+            <ReleaseCard
+              key={playlist.id}
+              image={playlist.images[0].url}
+              title={playlist.name}
+              artist={playlist.type}
+              // link={album.link}
             />
           ))}
         </div>
@@ -106,15 +125,15 @@ const Home = () => {
         </div>
       </section>
       <section className={styles.releaseSection}>
-        <h2>Your Playlists</h2>
+        <h2>Your Shows</h2>
         <div className={styles.cardsContainer}>
-          {yourPlaylists.map((playlist) => (
+          {filteredEpisodes.map((show) => (
             <ReleaseCard
-              key={playlist.id}
-              image={playlist.images[0].url}
-              title={playlist.name}
-              artist={playlist.type}
-              // link={album.link}
+              key={show.episode.id}
+              image={show.episode.images[0].url}
+              title={show.episode.show.name}
+              artist={show.episode.show.publisher}
+              // link={podcast.link}
             />
           ))}
         </div>

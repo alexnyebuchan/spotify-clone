@@ -1,3 +1,5 @@
+import { useContext, useState } from 'react';
+
 import styles from '../scss/Sidebar.module.scss';
 
 import data from '../../testData.js';
@@ -5,6 +7,10 @@ import data from '../../testData.js';
 import LibraryItem from './LibraryItem';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { DataContext } from '../context/DataContext.tsx';
+
+import CustomLink from './CustomLink.tsx';
 
 import {
   faSearch,
@@ -16,6 +22,30 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 const Sidebar = () => {
+  const [inputVisible, setInputVisible] = useState(false);
+
+  const toggleInputVisible = () => {
+    setInputVisible(!inputVisible);
+  };
+
+  const { playlists, episodes, albums } = useContext(DataContext);
+
+  const combinedItems = [];
+
+  const minLength = Math.min(
+    playlists.items.length,
+    albums.items.length,
+    episodes.items.length
+  );
+
+  for (let i = 0; i < minLength; i++) {
+    combinedItems.push(
+      playlists.items[i],
+      albums.items[i].album,
+      episodes.items[i].episode
+    );
+  }
+
   return (
     <div className={styles.container}>
       <section className={styles.nav}>
@@ -62,20 +92,31 @@ const Sidebar = () => {
             </div>
           </span>
           <div className={styles.type}>
-            <a href="/">Playlists</a>
-            <a href="/">Artists</a>
-            <a href="/">Albums</a>
-            <a href="/">Podcasts</a>
+            <CustomLink to="/">Playlists</CustomLink>
+            <CustomLink to="/">Artists</CustomLink>
+            <CustomLink to="/">Albums</CustomLink>
+            <CustomLink to="/">Podcasts</CustomLink>
           </div>
           <div className={styles.recents}>
-            <a href="/">
-              <FontAwesomeIcon
-                className={styles.searchIcon}
-                id="faIcon"
-                target="_blank"
-                icon={faSearch}
-              />
-            </a>
+            <div>
+              <CustomLink to="/">
+                <FontAwesomeIcon
+                  className={styles.searchIcon}
+                  onClick={toggleInputVisible}
+                  id="faIcon"
+                  target="_blank"
+                  icon={faSearch}
+                />
+              </CustomLink>
+              {inputVisible && (
+                <input
+                  className={styles.input}
+                  type="text"
+                  placeholder="Search in your library"
+                  style={{ opacity: inputVisible ? 1 : 0 }}
+                />
+              )}
+            </div>
             <a href="/">
               Recents
               <FontAwesomeIcon
@@ -87,7 +128,7 @@ const Sidebar = () => {
             </a>
           </div>
           <div>
-            {data.map((item) => (
+            {combinedItems.map((item) => (
               <LibraryItem key={item.id} item={item} />
             ))}
           </div>

@@ -19,7 +19,28 @@
   }
 }
 
+.rightNav {
+  display: flex;
+  p {
+    opacity: 0;
+    background-color: $bg-grey;
+    padding: 6px;
+    border-radius: 10%;
+    position: absolute;
+    right: 30px;
+    top: 55px;
+    transition: opacity 0.3s ease;
+  }
+}
+
+.profileIcon {
+  &:hover + p {
+    opacity: 1;
+  }
+}
+
 .install {
+  margin-right: 25px;
   a {
   }
 }

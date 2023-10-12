@@ -105,4 +105,19 @@
   justify-content: space-between;
   padding-inline: 20px;
   font-size: 14px;
+  height: 30px;
+}
+
+.input {
+  all: unset;
+  background-color: $btn-grey;
+  color: $light-grey;
+  border-radius: 10%;
+  padding: 4px;
+  margin-left: 6px;
+  height: 20px;
+  text-align: left;
+  width: 200px;
+  opacity: 0;
+  transition: opacity 1s ease;
 }
