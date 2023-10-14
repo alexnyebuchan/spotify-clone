@@ -1,9 +1,14 @@
 import './App.css';
 import './scss/main.scss';
+
 import Layout from './components/Layout';
 import Home from './screens/Home';
+import Album from './screens/Album.tsx';
+import Search from './screens/Search.tsx';
 
 import { useReducer, useEffect, useState } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
 import { AudioContext } from './context/AudioContext.tsx';
 import { DataContext } from './context/DataContext.tsx';
 
@@ -17,6 +22,7 @@ import {
   fetchRecents,
   fetchEpisodes,
   fetchAlbums,
+  fetchArtists,
 } from './api/Spotify.tsx'; // Import your Spotify-related functions
 
 function App() {
@@ -25,11 +31,13 @@ function App() {
   const [recents, setRecents] = useState(null);
   const [episodes, setEpisodes] = useState({});
   const [albums, setAlbums] = useState({});
+  const [artists, setArtists] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
-      const clientId = 'af3fedc28ef44c2fa737b0201f4b7ca7';
+      const clientId = import.meta.env.VITE_CLIENT_ID;
+      console.log(clientId);
       const params = new URLSearchParams(window.location.search);
       const code = params.get('code');
 
@@ -64,6 +72,12 @@ function App() {
             setAlbums(albumsData);
           }
 
+          const artistsData = await fetchArtists(accessToken);
+          if (artistsData.href) {
+            setArtists(artistsData);
+            console.log(artists);
+          }
+
           window.history.pushState({}, null, '/');
         } catch (error) {
           console.log(error);
@@ -86,21 +100,27 @@ function App() {
   const [state, dispatch] = useReducer(audioReducer, initialState);
 
   return (
-    <div>
-      {loading ? (
-        <div>Loading...</div>
-      ) : (
-        <DataContext.Provider
-          value={{ profile, playlists, recents, episodes, albums }}
-        >
-          <AudioContext.Provider value={{ state, dispatch }}>
-            <Layout>
-              <Home />
-            </Layout>
-          </AudioContext.Provider>
-        </DataContext.Provider>
-      )}
-    </div>
+    <Router>
+      <div>
+        {loading ? (
+          <div>Loading...</div>
+        ) : (
+          <DataContext.Provider
+            value={{ profile, playlists, recents, episodes, albums, artists }}
+          >
+            <AudioContext.Provider value={{ state, dispatch }}>
+              <Layout>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/album" element={<Album />} />
+                  <Route path="/search" element={<Search />} />
+                </Routes>
+              </Layout>
+            </AudioContext.Provider>
+          </DataContext.Provider>
+        )}
+      </div>
+    </Router>
   );
 }
 

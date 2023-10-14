@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 
+import { Link } from 'react-router-dom';
+
 const LibraryItem = ({ item }) => {
   // Get the artist, publisher or playlist creator of each item
   let displayName = '';
@@ -16,7 +18,7 @@ const LibraryItem = ({ item }) => {
   }
 
   return (
-    <a href="/" className={styles.container}>
+    <Link to="/album" className={styles.container}>
       <section>
         <img src={item.images[0].url} alt="/" />
       </section>
@@ -35,7 +37,7 @@ const LibraryItem = ({ item }) => {
           <text className={styles.secondary}>{displayName}</text>
         </div>
       </section>
-    </a>
+    </Link>
   );
 };
 

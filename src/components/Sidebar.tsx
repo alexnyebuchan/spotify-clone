@@ -2,15 +2,13 @@ import { useContext, useState } from 'react';
 
 import styles from '../scss/Sidebar.module.scss';
 
-import data from '../../testData.js';
-
 import LibraryItem from './LibraryItem';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { DataContext } from '../context/DataContext.tsx';
 
-import CustomLink from './CustomLink.tsx';
+import { Link } from 'react-router-dom';
 
 import {
   faSearch,
@@ -22,13 +20,14 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 const Sidebar = () => {
+  const [selectedType, setSelectedType] = useState();
   const [inputVisible, setInputVisible] = useState(false);
 
   const toggleInputVisible = () => {
     setInputVisible(!inputVisible);
   };
 
-  const { playlists, episodes, albums } = useContext(DataContext);
+  const { playlists, episodes, albums, artists } = useContext(DataContext);
 
   const combinedItems = [];
 
@@ -46,11 +45,20 @@ const Sidebar = () => {
     );
   }
 
+  const filteredItems = combinedItems.filter((item) => {
+    return selectedType ? item.type === selectedType : true;
+  });
+
+  const handleCategorisation = (type, e) => {
+    e.preventDefault();
+    setSelectedType(type);
+  };
+
   return (
     <div className={styles.container}>
       <section className={styles.nav}>
         <div className={styles.navItems}>
-          <a href="/">
+          <Link to="/">
             <FontAwesomeIcon
               className={styles.houseIcon}
               id="faIcon"
@@ -58,8 +66,8 @@ const Sidebar = () => {
               icon={faHouse}
             />
             Home
-          </a>
-          <a href="/">
+          </Link>
+          <Link to="/search">
             <FontAwesomeIcon
               className={styles.magIcon}
               id="faIcon"
@@ -67,7 +75,7 @@ const Sidebar = () => {
               icon={faMagnifyingGlass}
             />
             Search
-          </a>
+          </Link>
         </div>
       </section>
       <section className={styles.library}>
@@ -92,14 +100,22 @@ const Sidebar = () => {
             </div>
           </span>
           <div className={styles.type}>
-            <CustomLink to="/">Playlists</CustomLink>
-            <CustomLink to="/">Artists</CustomLink>
-            <CustomLink to="/">Albums</CustomLink>
-            <CustomLink to="/">Podcasts</CustomLink>
+            <Link to="/" onClick={(e) => handleCategorisation('episode', e)}>
+              Playlists
+            </Link>
+            <Link to="/" onClick={(e) => handleCategorisation('episode', e)}>
+              Artists
+            </Link>
+            <Link to="/" onClick={(e) => handleCategorisation('album', e)}>
+              Albums
+            </Link>
+            <Link to="/" onClick={(e) => handleCategorisation('playlist', e)}>
+              Podcasts
+            </Link>
           </div>
           <div className={styles.recents}>
             <div>
-              <CustomLink to="/">
+              <Link to="/">
                 <FontAwesomeIcon
                   className={styles.searchIcon}
                   onClick={toggleInputVisible}
@@ -107,7 +123,7 @@ const Sidebar = () => {
                   target="_blank"
                   icon={faSearch}
                 />
-              </CustomLink>
+              </Link>
               {inputVisible && (
                 <input
                   className={styles.input}
@@ -128,7 +144,7 @@ const Sidebar = () => {
             </a>
           </div>
           <div>
-            {combinedItems.map((item) => (
+            {filteredItems.map((item) => (
               <LibraryItem key={item.id} item={item} />
             ))}
           </div>

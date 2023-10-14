@@ -2,10 +2,6 @@ import { useContext } from 'react';
 
 import styles from '../scss/Home.module.scss';
 
-import testImg from '../../public/images/test/a7.jpg';
-
-import podcastData from '../../yourShows.js';
-
 import ReleaseCard from '../components/ReleaseCard.js';
 import Nav from '../components/Nav.tsx';
 
@@ -33,8 +29,7 @@ const Home = () => {
     return str;
   };
 
-  const { profile, playlists, recents, episodes, albums } =
-    useContext(DataContext);
+  const { playlists, recents, episodes, albums } = useContext(DataContext);
 
   const uniqueAlbums = new Set();
   const uniqueEpisodes = new Set();
