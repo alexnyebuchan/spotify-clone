@@ -1,14 +1,16 @@
 import styles from '../scss/ReleaseCard.module.scss';
 
-const ReleaseCard = ({ image, title, artist, link }) => {
+import { Link } from 'react-router-dom';
+
+const ReleaseCard = ({ image, title, artist, id }) => {
   return (
-    <div className={styles.container}>
-      <a href={link}>
+    <Link to={`/album/${id}`}>
+      <div className={styles.container}>
         <img src={image} alt="/" />
         <h5>{title}</h5>
         <p>{artist}</p>
-      </a>
-    </div>
+      </div>
+    </Link>
   );
 };
 

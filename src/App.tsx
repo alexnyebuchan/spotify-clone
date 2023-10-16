@@ -33,11 +33,11 @@ function App() {
   const [albums, setAlbums] = useState({});
   const [artists, setArtists] = useState({});
   const [loading, setLoading] = useState(true);
+  const [token, setToken] = useState('');
 
   useEffect(() => {
     async function fetchData() {
       const clientId = import.meta.env.VITE_CLIENT_ID;
-      console.log(clientId);
       const params = new URLSearchParams(window.location.search);
       const code = params.get('code');
 
@@ -45,7 +45,10 @@ function App() {
         redirectToAuthCodeFlow(clientId);
       } else {
         try {
-          const accessToken = await getAccessToken(clientId, code);
+          const accessToken: string = await getAccessToken(clientId, code);
+          if (accessToken) {
+            setToken(accessToken);
+          }
 
           const profileData = await fetchProfile(accessToken);
           if (profileData.display_name) {
@@ -106,13 +109,22 @@ function App() {
           <div>Loading...</div>
         ) : (
           <DataContext.Provider
-            value={{ profile, playlists, recents, episodes, albums, artists }}
+            value={{
+              profile,
+              playlists,
+              recents,
+              episodes,
+              albums,
+              artists,
+              token,
+            }}
           >
             <AudioContext.Provider value={{ state, dispatch }}>
               <Layout>
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/album" element={<Album />} />
+                  <Route path="/album/:id" element={<Album />} />
                   <Route path="/search" element={<Search />} />
                 </Routes>
               </Layout>

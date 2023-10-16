@@ -1,5 +1,7 @@
 import { useContext } from 'react';
 
+import { Link } from 'react-router-dom';
+
 import styles from '../scss/Home.module.scss';
 
 import ReleaseCard from '../components/ReleaseCard.js';
@@ -71,10 +73,10 @@ const Home = () => {
       </section>
       <section className={styles.recentsContainer}>
         {sixRecents.map((recent_item) => (
-          <a className={styles.recentCard} key={recent_item.id}>
+          <Link className={styles.recentCard} key={recent_item.id} to="/album">
             <img src={recent_item.track.album.images[0].url} alt="/" />
             <span>{recent_item.track.album.name}</span>
-          </a>
+          </Link>
         ))}
       </section>
       <section className={styles.releaseSection}>
@@ -86,6 +88,7 @@ const Home = () => {
               image={item.album.images[0].url}
               title={item.album.name}
               artist={item.album.artists[0].name}
+              id={item.album.id}
               // link={album.link}
             />
           ))}
