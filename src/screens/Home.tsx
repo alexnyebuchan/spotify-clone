@@ -65,6 +65,8 @@ const Home = () => {
   const yourPlaylists = playlists.items.slice(0, 5);
   const yourAlbums = albums.items.slice(0, 5);
 
+  console.log(playlists);
+
   return (
     <div className={styles.container}>
       <Nav />

@@ -44,8 +44,9 @@
     font-size: 15px;
   }
   h2 {
-    font-size: 80px;
+    font-size: 3em;
     margin-top: 50px;
+    white-space: nowrap;
   }
   span {
     color: $light-grey;

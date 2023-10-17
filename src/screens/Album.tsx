@@ -8,6 +8,10 @@ import styles from '../scss/Album.module.scss';
 
 import { fetchSingleAlbum } from '../api/Spotify.tsx';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { faPause, faPlay } from '@fortawesome/free-solid-svg-icons';
+
 const Album = () => {
   const params = window.location.pathname.split('/');
   const albumId = params[params.length - 1];
@@ -57,29 +61,32 @@ const Album = () => {
       {isLoading ? (
         <div>Loading...</div>
       ) : (
-        <section className={styles.info}>
-          <div className={styles.imgContainer}>
-            <img src={currentAlbum.images[0].url} alt="/" />
-          </div>
-          <div className={styles.infoContainer}>
-            <p>Album</p>
-            <h2>{currentAlbum.name}</h2>
-            <div className={styles.additional}>
-              <p>
-                {currentAlbum.artists[0].name} .{' '}
-                {currentAlbum.release_date.slice(0, 4)} .{' '}
-                {currentAlbum.tracks.items.length} songs .{' '}
-                <span>
-                  {currentAlbum.tracks.items.forEach((track) => {
-                    length = track.duration_ms;
-                    albumLength += length;
-                  })}
-                  {formatMilliseconds(albumLength)}
-                </span>
-              </p>
+        <>
+          <section className={styles.info}>
+            <div className={styles.imgContainer}>
+              <img src={currentAlbum.images[0].url} alt="/" />
             </div>
-          </div>
-        </section>
+            <div className={styles.infoContainer}>
+              <p>Album</p>
+              <h2>{currentAlbum.name}</h2>
+              <div className={styles.additional}>
+                <p>
+                  {currentAlbum.artists[0].name} .{' '}
+                  {currentAlbum.release_date.slice(0, 4)} .{' '}
+                  {currentAlbum.tracks.items.length} songs .{' '}
+                  <span>
+                    {currentAlbum.tracks.items.forEach((track) => {
+                      length = track.duration_ms;
+                      albumLength += length;
+                    })}
+                    {formatMilliseconds(albumLength)}
+                  </span>
+                </p>
+              </div>
+            </div>
+          </section>
+          <section></section>
+        </>
       )}
     </div>
   );

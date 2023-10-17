@@ -76,9 +76,8 @@ function App() {
           }
 
           const artistsData = await fetchArtists(accessToken);
-          if (artistsData.href) {
+          if (artistsData.name) {
             setArtists(artistsData);
-            console.log(artists);
           }
 
           window.history.pushState({}, null, '/');
@@ -101,6 +100,8 @@ function App() {
   };
 
   const [state, dispatch] = useReducer(audioReducer, initialState);
+
+  console.log(episodes);
 
   return (
     <Router>

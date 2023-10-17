@@ -7,7 +7,6 @@ import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
 const LibraryItem = ({ item }) => {
-  // Get the artist, publisher or playlist creator of each item
   let displayName = '';
   if (item.type === 'episode') {
     displayName = item.show.publisher;
