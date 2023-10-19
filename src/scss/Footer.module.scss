@@ -1,0 +1,18 @@
+@import './colours.module';
+
+.container {
+  margin-top: 32px;
+  font-size: 15px;
+  color: $light-grey;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  span {
+    font-size: 11px;
+  }
+}
+
+.copyContainer {
+  display: flex;
+  flex-direction: column;
+}

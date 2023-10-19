@@ -52,3 +52,29 @@
     color: $light-grey;
   }
 }
+
+.icons {
+  display: flex;
+  align-items: center;
+  margin-block: 20px;
+}
+
+.play {
+  background-color: $green;
+  color: $black;
+  border: none;
+  border-radius: 50%;
+  width: 19px;
+  height: 19px;
+  padding: 19px;
+  margin-right: 20px;
+}
+
+.heart,
+.ellipsis {
+  color: $light-grey;
+  width: 30px;
+  height: 30px;
+  padding: 5px;
+  margin-right: 7px;
+}

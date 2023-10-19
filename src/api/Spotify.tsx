@@ -132,3 +132,18 @@ export async function fetchArtists(token: string): Promise<any> {
 
   return await result.json();
 }
+
+export async function fetchAlbumByArtist(
+  token: string,
+  id: string
+): Promise<any> {
+  const result = await fetch(
+    `https://api.spotify.com/v1/artists/${id}/albums?limit=5`,
+    {
+      method: 'GET',
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+
+  return await result.json();
+}

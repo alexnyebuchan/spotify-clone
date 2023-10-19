@@ -1,0 +1,43 @@
+@import './colours.module';
+
+.container {
+  color: $light-grey;
+  width: 100%;
+  tr {
+    padding-inline: 20px;
+    display: flex;
+    justify-content: space-between;
+    div {
+      display: flex;
+      text-align: left;
+    }
+    span {
+      color: $white;
+    }
+  }
+}
+
+.header {
+  border-bottom: 1px solid $btn-grey;
+  margin-bottom: 30px;
+}
+
+.no {
+  margin-right: 20px;
+}
+
+.trackContainer {
+  padding-block: 8px;
+  &:hover {
+    background-color: $btn-grey;
+  }
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+}
+
+.time {
+  text-align: left;
+}
