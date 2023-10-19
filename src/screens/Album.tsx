@@ -40,7 +40,7 @@ const Album = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [params]);
 
   let albumLength: number = 0;
 

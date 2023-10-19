@@ -9,6 +9,8 @@ import Nav from '../components/Nav.tsx';
 
 import { DataContext } from '../context/DataContext.tsx';
 
+import { shortenString } from '../utils/formatting.tsx';
+
 const Home = () => {
   // Good (time of day)
   const currentTime = new Date();
@@ -22,14 +24,6 @@ const Home = () => {
   } else {
     greeting = 'Good Evening';
   }
-
-  // Function to shorten a string if it's longer than 18 characters
-  const shortenString = (str) => {
-    if (str.length > 18) {
-      return str.slice(0, 18) + '...';
-    }
-    return str;
-  };
 
   const { playlists, recents, episodes, albums } = useContext(DataContext);
 
@@ -65,7 +59,7 @@ const Home = () => {
   const yourPlaylists = playlists.items.slice(0, 5);
   const yourAlbums = albums.items.slice(0, 5);
 
-  console.log(playlists);
+  console.log(jumpBackIn);
 
   return (
     <div className={styles.container}>
@@ -91,7 +85,6 @@ const Home = () => {
               title={item.album.name}
               artist={item.album.artists[0].name}
               id={item.album.id}
-              // link={album.link}
             />
           ))}
         </div>
@@ -105,7 +98,6 @@ const Home = () => {
               image={playlist.images[0].url}
               title={playlist.name}
               artist={playlist.type}
-              // link={album.link}
             />
           ))}
         </div>
@@ -115,11 +107,11 @@ const Home = () => {
         <div className={styles.cardsContainer}>
           {jumpBackIn.map((album) => (
             <ReleaseCard
-              key={album.id}
+              key={album.track.id}
               image={album.track.album.images[0].url}
               title={album.track.album.name}
               artist={album.track.album.artists[0].name}
-              // link={album.link}
+              id={album.track.album.id}
             />
           ))}
         </div>

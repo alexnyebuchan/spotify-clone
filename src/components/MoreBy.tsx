@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
 
 import { fetchAlbumByArtist } from '../api/Spotify';
+import { shortenString } from '../utils/formatting';
 
 import ReleaseCard from './ReleaseCard';
+
+import styles from '../scss/MoreBy.module.scss';
 
 const MoreBy = ({ artist, id, token }) => {
   const [Albums, setAlbums] = useState({});
@@ -20,8 +23,6 @@ const MoreBy = ({ artist, id, token }) => {
     fetchData(id);
   }, []);
 
-  console.log(Albums.items);
-
   return (
     <>
       {isLoading ? (
@@ -30,16 +31,17 @@ const MoreBy = ({ artist, id, token }) => {
         <div>
           <h2>More by {artist}</h2>
           <div>
-            {/* <div>
+            <div className={styles.cardContainer}>
               {Albums.items.map((album) => (
                 <ReleaseCard
                   key={album.id}
-                  image={album.track.album.images[0].url}
-                  title={album.track.album.name}
-                  artist={album.track.album.artists[0].name}
+                  id={album.id}
+                  image={album.images[0].url}
+                  title={shortenString(album.name)}
+                  artist={artist}
                 />
               ))}
-            </div> */}
+            </div>
           </div>
         </div>
       )}

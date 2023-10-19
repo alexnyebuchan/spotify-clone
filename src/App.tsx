@@ -101,8 +101,6 @@ function App() {
 
   const [state, dispatch] = useReducer(audioReducer, initialState);
 
-  console.log(episodes);
-
   return (
     <Router>
       <div>
