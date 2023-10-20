@@ -7,9 +7,9 @@ import Nav from '../components/Nav';
 import { DataContext } from '../context/DataContext.tsx';
 
 import { fetchSearch } from '../api/Spotify';
-
 import { formatQuery } from '../utils/formatting';
-import { debounce } from '../utils/debounce.tsx';
+
+import debounce from 'lodash/debounce';
 
 const Search = () => {
   const [searchValue, setSearchValue] = useState('');
@@ -20,10 +20,11 @@ const Search = () => {
 
   const { token } = useContext(DataContext);
 
-  const fetchDebounced = debounce(fetchData(), 500);
+  const fetchDebounced = debounce(fetchData, 5000);
 
   async function fetchData() {
-    const searchData = await fetchSearch(token, searchValue);
+    const formattedQuery = formatQuery(searchValue);
+    const searchData = await fetchSearch(token, formattedQuery);
 
     if (searchData.albums) {
       setSearchedAlbums(searchData);
@@ -32,16 +33,14 @@ const Search = () => {
   }
 
   useEffect(() => {
-    if (searchValue) {
-      fetchDebounced();
-    }
+    // fetchDebounced();
   }, [searchValue]);
 
   const setInputValue = (input) => {
-    setSearchValue(formatQuery(input.target.value));
+    setSearchValue(input.target.value);
   };
 
-  // console.log(searchedAlbums);
+  console.log(searchedAlbums);
 
   return (
     <div className={styles.container}>
@@ -51,6 +50,7 @@ const Search = () => {
         placeholder="What do you want to listen to?"
         onChange={setInputValue}
         ref={input}
+        value={searchValue}
       />
       {isLoading ? (
         <div>Loading...</div>
