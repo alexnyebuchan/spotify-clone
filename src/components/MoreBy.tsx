@@ -28,7 +28,7 @@ const MoreBy = ({ artist, id, token }) => {
       {isLoading ? (
         <div>Loading...</div>
       ) : (
-        <div>
+        <div className={styles.container}>
           <h2>More by {artist}</h2>
           <div>
             <div className={styles.cardContainer}>

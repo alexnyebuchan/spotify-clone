@@ -45,7 +45,7 @@ const Album = () => {
   let albumLength: number = 0;
 
   return (
-    <div className={styles.container}>
+    <div id={top} className={styles.container}>
       <Nav />
       {isLoading ? (
         <div>Loading...</div>

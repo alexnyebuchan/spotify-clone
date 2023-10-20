@@ -147,3 +147,15 @@ export async function fetchAlbumByArtist(
 
   return await result.json();
 }
+
+export async function fetchSearch(token: string, id: string): Promise<any> {
+  const result = await fetch(
+    `https://api.spotify.com/v1/search?q=${id}&type=album`,
+    {
+      method: 'GET',
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+
+  return await result.json();
+}
