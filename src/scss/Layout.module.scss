@@ -11,8 +11,8 @@
 }
 
 .sidebarContainer,
-.screenContainer {
-  flex: 1;
+.screenContainer,
+.artistsContainer {
   margin-top: 10px;
   margin-inline: 5px;
 }
@@ -22,5 +22,9 @@
 }
 
 .screenContainer {
-  flex-basis: 75%;
+  flex-basis: 50%;
+}
+
+.artistsContainer {
+  flex-basis: 25%;
 }

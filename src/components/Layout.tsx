@@ -3,6 +3,7 @@
 // import { AudioContext } from '../context/AudioContext.tsx';
 import Sidebar from './Sidebar.tsx';
 import AudioPlayer from './AudioPlayer';
+import ArtistSection from './ArtistSection.tsx';
 
 import styles from '../scss/Layout.module.scss';
 
@@ -17,6 +18,9 @@ const Layout = ({ children }) => {
           <Sidebar />
         </section>
         <section className={styles.screenContainer}>{children}</section>
+        <section className={styles.artistContainer}>
+          <ArtistSection />
+        </section>
       </div>
       <AudioPlayer />
     </>
