@@ -18,9 +18,9 @@ const Layout = ({ children }) => {
           <Sidebar />
         </section>
         <section className={styles.screenContainer}>{children}</section>
-        <section className={styles.artistContainer}>
+        {/* <section className={styles.artistContainer}>
           <ArtistSection />
-        </section>
+        </section> */}
       </div>
       <AudioPlayer />
     </>
