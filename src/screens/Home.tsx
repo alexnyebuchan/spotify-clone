@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import styles from '../scss/Home.module.scss';
 
+import RecentCard from '../components/RecentCard.js';
 import ReleaseCard from '../components/ReleaseCard.js';
 import Nav from '../components/Nav.tsx';
 
@@ -16,6 +17,8 @@ const Home = () => {
   const currentTime = new Date();
   const currentHour = currentTime.getHours();
   let greeting;
+
+  let amountOfCards = 7;
 
   if (currentHour < 12) {
     greeting = 'Good Morning';
@@ -55,11 +58,12 @@ const Home = () => {
   });
 
   const sixRecents = filteredRecents.slice(0, 6);
-  const jumpBackIn = filteredRecents.slice(-5);
-  const yourPlaylists = playlists.items.slice(0, 5);
-  const yourAlbums = albums.items.slice(0, 5);
+  const jumpBackIn = filteredRecents.slice(-amountOfCards);
+  const yourPlaylists = playlists.items.slice(0, amountOfCards);
+  const yourAlbums = albums.items.slice(0, amountOfCards);
 
-  console.log(jumpBackIn);
+  console.log(yourPlaylists)
+
 
   return (
     <div className={styles.container}>
@@ -69,10 +73,12 @@ const Home = () => {
       </section>
       <section className={styles.recentsContainer}>
         {sixRecents.map((recent_item) => (
-          <Link className={styles.recentCard} key={recent_item.id} to="/album">
-            <img src={recent_item.track.album.images[0].url} alt="/" />
-            <span>{recent_item.track.album.name}</span>
-          </Link>
+          <RecentCard  
+          key={recent_item.track.id} 
+          id={recent_item.track.album.id} 
+          image={recent_item.track.album.images[0].url} 
+          title={recent_item.track.album.name}
+          />
         ))}
       </section>
       <section className={styles.releaseSection}>
