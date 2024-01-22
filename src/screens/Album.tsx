@@ -1,31 +1,38 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext, useRef } from 'react';
+
+import { useParams } from 'react-router-dom';
+
 
 import { DataContext } from '../context/DataContext.tsx';
 
 import Nav from '../components/Nav.tsx';
-
-import styles from '../scss/Album.module.scss';
-
 import Tracklist from '../components/Tracklist.tsx';
-
-import { fetchSingleAlbum } from '../api/Spotify.tsx';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import { faPause, faPlay, faEllipsis } from '@fortawesome/free-solid-svg-icons';
-
-import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
-
-import { formatMilliseconds } from '../utils/calculateTime.tsx';
 import Footer from '../components/Footer.tsx';
 import MoreBy from '../components/MoreBy.tsx';
 
+import styles from '../scss/Album.module.scss';
+
+
+import { fetchSingleAlbum } from '../api/Spotify.tsx';
+import { formatMilliseconds } from '../utils/calculateTime.tsx';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPause, faPlay, faEllipsis } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
+
+
+
 const Album = () => {
-  const params = window.location.pathname.split('/');
-  const albumId = params[params.length - 1];
+  const params = useParams();
+  const albumId = params.id;
 
   const [currentAlbum, setCurrentAlbum] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+
+  console.log(params)
+
+
+  const containerRef = useRef(null);
 
   const { token } = useContext(DataContext);
 
@@ -33,19 +40,21 @@ const Album = () => {
     const albumData = await fetchSingleAlbum(token, albumId);
     if (albumData.href) {
       setCurrentAlbum(albumData);
-
       setIsLoading(false);
     }
   }
 
   useEffect(() => {
     fetchData();
+    containerRef.current.scrollTop = 0;
   }, [params]);
+
+
 
   let albumLength: number = 0;
 
   return (
-    <div id={top} className={styles.container}>
+    <div id={top} className={styles.container} ref={containerRef}>
       <Nav />
       {isLoading ? (
         <div>Loading...</div>

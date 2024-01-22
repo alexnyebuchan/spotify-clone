@@ -62,7 +62,6 @@ const Home = () => {
   const yourPlaylists = playlists.items.slice(0, amountOfCards);
   const yourAlbums = albums.items.slice(0, amountOfCards);
 
-  console.log(yourPlaylists)
 
 
   return (

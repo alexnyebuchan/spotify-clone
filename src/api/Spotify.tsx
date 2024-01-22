@@ -150,7 +150,7 @@ export async function fetchAlbumByArtist(
 
 export async function fetchSearch(token: string, id: string): Promise<any> {
   const result = await fetch(
-    `https://api.spotify.com/v1/search?q=${id}&type=album`,
+    `https://api.spotify.com/v1/search?q=${id}&type=track&limit=7`,
     {
       method: 'GET',
       headers: { Authorization: `Bearer ${token}` },
