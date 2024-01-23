@@ -9,7 +9,7 @@ import { DataContext } from '../context/DataContext.tsx';
 import { fetchSearch } from '../api/Spotify';
 import { formatQuery } from '../utils/formatting';
 
-import debounce from 'lodash/debounce';
+import { formatMilliseconds } from '../utils/calculateTime.tsx';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -32,17 +32,24 @@ const Search = () => {
     const formattedQuery = formatQuery(searchValue);
     const searchData = await fetchSearch(token, formattedQuery);
 
+    
 
-    if (searchData.albums) {
+
+    if (searchData.tracks) {
       setSearchedAlbums(searchData);
       setIsLoading(false);
-      console.log(searchData)
+      if(searchedAlbums){
+        console.log(searchedAlbums.tracks.items[0].duration)
+      }
+      
+
     }
   }
 
   useEffect(() => {
     if (searchValue){
       fetchData();
+      
     }
   
   }, [searchValue]);
@@ -78,18 +85,30 @@ const Search = () => {
             <h2>Top Results</h2>
             <div>
               {/* <img src="" alt="" /> */}
-              {/* <h3>{searchedAlbums.albums.items[0].artists[0].name}</h3> */}
-              <h4>Type</h4>
+              <h3>{searchedAlbums.tracks.items[0].artists[0].name}</h3>
+              <h4>Artist</h4>
             </div>
           </div>
           <div className={styles.songs}>
             <h2>Songs</h2>
             <ul>
-              <li>
-                {/* img */}
-                <h4>Track title</h4>
-                <p>Track title</p>
-              </li>
+              {searchedAlbums.tracks.items.slice(0,4).map((track, index) => (
+                <li key={index}>
+                  <div className={styles.imgInfoContainer}>
+                    <div>
+                      <img src={track.album.images[2].url} alt="/" />
+                    </div>
+                    <div>
+                      <h4>{track.name}</h4>
+                      <p>{track.artists[0].name}</p>
+                    </div>
+                  </div>
+                  <div>
+                    {formatMilliseconds(track.duration_ms, 'minSec')}
+                  </div>
+                </li>
+              ))}
+              
             </ul>
           </div>
         </div>

@@ -59,9 +59,38 @@
 }
 
 .topResults {
-  width: 40%;
+  width: 30%;
+  margin: 30px;
+  div{
+    background-color: $btn-grey;
+    padding: 20px;
+  }
 }
 
 .songs{
   width: 60%;
+  margin: 30px;
+  
+  ul, li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    line-height: 0.8;
+  }
+  p{
+    color: $light-grey;
+  }
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  img {
+    margin: 10px;
+  }
+  
+}
+
+.imgInfoContainer {
+  display: flex;
 }
