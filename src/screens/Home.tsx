@@ -1,6 +1,4 @@
-import { useContext } from 'react';
-
-import { Link } from 'react-router-dom';
+import { useContext, useEffect, useRef, useState } from 'react';
 
 import styles from '../scss/Home.module.scss';
 
@@ -13,6 +11,27 @@ import { DataContext } from '../context/DataContext.tsx';
 import { shortenString } from '../utils/formatting.tsx';
 
 const Home = () => {
+  const containerRef = useRef(null);
+  const [scrollPosition, setScrollPosition] = useState(0)
+
+  useEffect(() => {
+    const logScrollPosition = () => {
+      if (containerRef.current) {
+        setScrollPosition(containerRef.current.scrollTop)
+      }
+    };
+
+    if (containerRef.current) {
+      containerRef.current.addEventListener('scroll', logScrollPosition);
+    }
+
+    return () => {
+      if (containerRef.current) {
+        containerRef.current.removeEventListener('scroll', logScrollPosition);
+      }
+    };
+  }, []);
+
   // Good (time of day)
   const currentTime = new Date();
   const currentHour = currentTime.getHours();
@@ -64,9 +83,12 @@ const Home = () => {
 
 
 
+
+
   return (
-    <div className={styles.container}>
-      <Nav />
+    <div className={styles.container} ref={containerRef}>
+      <Nav scrollPosition={scrollPosition} />
+      <div className={styles.notNav}>
       <section className={styles.welcome}>
         <h4>{greeting}</h4>
       </section>
@@ -135,6 +157,7 @@ const Home = () => {
           ))}
         </div>
       </section>
+      </div>
     </div>
   );
 };

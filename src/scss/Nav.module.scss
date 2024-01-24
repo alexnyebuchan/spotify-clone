@@ -4,9 +4,18 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  position: sticky;
+  top:0;
+  padding-block: 20px;
+  transition: background-color 0.3s ease-in-out;
+  z-index: 1;
   a {
     color: $white;
   }
+}
+
+#navScrolled {
+  background-color: $bg-grey;
 }
 
 .chevrons {

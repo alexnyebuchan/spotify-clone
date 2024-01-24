@@ -16,8 +16,10 @@ import styles from '../scss/Nav.module.scss';
 
 import { DataContext } from '../context/DataContext.tsx';
 
-const Nav = () => {
+const Nav = ({scrollPosition}) => {
   const { profile } = useContext(DataContext);
+
+  console.log(scrollPosition)
 
   const navigate = useNavigate();
 
@@ -29,8 +31,9 @@ const Nav = () => {
     navigate(1);
   }
 
+
   return (
-    <section className={styles.top}>
+    <section className={styles.top} id={scrollPosition > 0 ? styles.navScrolled : ''}>
       <div className={styles.chevrons}>
         <span onClick={handleNavBack}>
           <FontAwesomeIcon

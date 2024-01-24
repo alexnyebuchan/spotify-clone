@@ -1,5 +1,5 @@
 // Avoids overlays by shortening titles with ...
-export const shortenString = (str) => {
+export const shortenString = (str: string) => {
   if (str.length > 18) {
     return str.slice(0, 18) + '...';
   }
@@ -7,7 +7,7 @@ export const shortenString = (str) => {
 };
 
 // Formats copyrights from various inputs
-export const formatCopyright = (copyright, type) => {
+export const formatCopyright = (copyright: string, type: string) => {
   let symbol;
   let text;
 
@@ -46,6 +46,6 @@ export const formatCopyright = (copyright, type) => {
 };
 
 // Make a query suitable for fetch requests
-export const formatQuery = (query) => {
+export const formatQuery = (query: string) => {
   return encodeURIComponent(query).toLowerCase();
 };

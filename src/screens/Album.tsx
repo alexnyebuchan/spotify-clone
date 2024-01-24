@@ -20,17 +20,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPause, faPlay, faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 
-
-
 const Album = () => {
   const params = useParams();
   const albumId = params.id;
 
   const [currentAlbum, setCurrentAlbum] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-
-  console.log(params)
-
+  const [scrollPosition, setScrollPosition] = useState(0)
 
   const containerRef = useRef(null);
 
@@ -49,13 +45,31 @@ const Album = () => {
     containerRef.current.scrollTop = 0;
   }, [params]);
 
+  useEffect(() => {
+    const logScrollPosition = () => {
+      if (containerRef.current) {
+        setScrollPosition(containerRef.current.scrollTop)
+      }
+    };
 
+    if (containerRef.current) {
+      containerRef.current.addEventListener('scroll', logScrollPosition);
+    }
+
+    return () => {
+      if (containerRef.current) {
+        containerRef.current.removeEventListener('scroll', logScrollPosition);
+      }
+    };
+  }, []);
 
   let albumLength: number = 0;
 
+
   return (
     <div id={top} className={styles.container} ref={containerRef}>
-      <Nav />
+      <Nav scrollPosition={scrollPosition} />
+      <div className={styles.notNav}>
       {isLoading ? (
         <div>Loading...</div>
       ) : (
@@ -115,6 +129,7 @@ const Album = () => {
           />
         </>
       )}
+      </div>
     </div>
   );
 };

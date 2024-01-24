@@ -10,6 +10,8 @@ import styles from '../scss/Layout.module.scss';
 const Layout = ({ children }) => {
   // const { state } = useContext(AudioContext);
 
+  
+
   return (
     <>
       <div className={styles.layoutContainer}>
