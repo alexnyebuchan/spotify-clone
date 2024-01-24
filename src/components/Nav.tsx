@@ -1,5 +1,7 @@
 import { useContext } from 'react';
 
+import { useNavigate, Link } from "react-router-dom";
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import {
@@ -17,25 +19,35 @@ import { DataContext } from '../context/DataContext.tsx';
 const Nav = () => {
   const { profile } = useContext(DataContext);
 
+  const navigate = useNavigate();
+
+  function handleNavBack() {
+    navigate(-1);
+  }
+
+  function handleNavFwd() {
+    navigate(1);
+  }
+
   return (
     <section className={styles.top}>
       <div className={styles.chevrons}>
-        <a href="/">
+        <span onClick={handleNavBack}>
           <FontAwesomeIcon
             className={styles.chevron}
             id="faIcon"
             target="_blank"
             icon={faChevronLeft}
           />
-        </a>
-        <a href="/">
+        </span>
+        <span onClick={handleNavFwd}>
           <FontAwesomeIcon
             className={styles.chevron}
             id="faIcon"
             target="_blank"
             icon={faChevronRight}
           />
-        </a>
+        </span>
       </div>
       <div className={styles.rightNav}>
         <div className={styles.install}>

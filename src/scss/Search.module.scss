@@ -50,6 +50,20 @@
 
 }
 
+.tags {
+  color: $white;
+  display: flex;
+  ul {
+    list-style: none;
+    display: flex;
+    li {
+      margin-right: 15px;
+      cursor: pointer;
+      background-color: $btn-grey;
+      padding: 8px;
+    }
+  }
+}
 
 .resultsContainer {
   color: $white;

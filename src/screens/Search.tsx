@@ -6,7 +6,7 @@ import Nav from '../components/Nav';
 
 import { DataContext } from '../context/DataContext.tsx';
 
-import { fetchSearch } from '../api/Spotify';
+import { fetchSearch, fetchSingleSearch } from '../api/Spotify';
 import { formatQuery } from '../utils/formatting';
 
 import { formatMilliseconds } from '../utils/calculateTime.tsx';
@@ -20,7 +20,8 @@ import {
 const Search = () => {
   const [searchValue, setSearchValue] = useState('');
   const [searchedAlbums, setSearchedAlbums] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [searchedMain, setSearchedMain] = useState(null);
+  const [tag, setTag] = useState('artist')
 
   const input = useRef();
 
@@ -28,28 +29,28 @@ const Search = () => {
 
   // const fetchDebounced = debounce(fetchData, 5000);
 
-  async function fetchData() {
+  async function fetchTrackData() {
     const formattedQuery = formatQuery(searchValue);
     const searchData = await fetchSearch(token, formattedQuery);
-
     
-
-
     if (searchData.tracks) {
       setSearchedAlbums(searchData);
-      setIsLoading(false);
-      if(searchedAlbums){
-        console.log(searchedAlbums.tracks.items[0].duration)
-      }
-      
-
     }
+  }
+
+  async function fetchMainData() {
+    console.log(tag)
+    const formattedQuery = formatQuery(searchValue);
+    const searchData = await fetchSingleSearch(token, formattedQuery, tag);
+    console.log(searchData)
+    
+   
   }
 
   useEffect(() => {
     if (searchValue){
-      fetchData();
-      
+      fetchTrackData();
+      fetchMainData()
     }
   
   }, [searchValue]);
@@ -58,10 +59,23 @@ const Search = () => {
     setSearchValue(input.target.value);
   };
 
+  function handleTag(type){
+    setTag(type)
+  }
+
 
   return (
     <div className={styles.container}>
       <Nav />
+      <div className={styles.tags}>
+        <p>Search by:</p>
+        <ul>
+          <li onClick={() => handleTag('artist')}>Artist</li>
+          <li onClick={() => handleTag('album')}>Album</li>
+          <li onClick={() => handleTag('track')}>Track</li>
+          <li onClick={() => handleTag('playlist')}>Playlist</li>
+        </ul>
+      </div>
       <div className={styles.inputContainer}>
         <FontAwesomeIcon className={styles.icon}
             id="faIcon"
