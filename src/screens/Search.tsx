@@ -7,7 +7,7 @@ import Nav from '../components/Nav';
 import { DataContext } from '../context/DataContext.tsx';
 
 import { fetchSearch, fetchSingleSearch } from '../api/Spotify';
-import { formatQuery } from '../utils/formatting';
+import { capitaliseFirstLetter, formatQuery } from '../utils/formatting';
 
 import { formatMilliseconds } from '../utils/calculateTime.tsx';
 
@@ -21,7 +21,11 @@ const Search = () => {
   const [searchValue, setSearchValue] = useState('');
   const [searchedAlbums, setSearchedAlbums] = useState(null);
   const [searchedMain, setSearchedMain] = useState(null);
+  const [loading, setLoading] = useState(true)
+  const [image, setImage] = useState(null)
   const [tag, setTag] = useState('artist')
+
+  const capitolTag = capitaliseFirstLetter(tag)
 
   const input = useRef();
 
@@ -39,21 +43,52 @@ const Search = () => {
   }
 
   async function fetchMainData() {
-    console.log(tag)
     const formattedQuery = formatQuery(searchValue);
-    const searchData = await fetchSingleSearch(token, formattedQuery, tag);
-    console.log(searchData)
     
-   
+    const searchData = await fetchSingleSearch(token, formattedQuery, tag);
+    if (searchData) {
+      const tagWithS = tag + 's'
+      if (tag === 'artist' || 'album'){
+        setImage(searchData[tagWithS].items[0].images[2].url)
+      } else if (tag === 'track') {
+        setImage(searchData[tagWithS].items[0].album.images[0].url)
+      } else {
+        setImage(searchData[tagWithS].items[0].images[0].url)
+      }
+      setSearchedMain(searchData[tagWithS].items[0]);
+    }
   }
 
   useEffect(() => {
-    if (searchValue){
-      fetchTrackData();
-      fetchMainData()
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const [tracks, mainData] = await Promise.all([fetchTrackData(), fetchMainData()]);
+
+        if (tracks) {
+          setSearchedAlbums(tracks);
+        }
+
+        if (mainData) {
+          const tagWithS = tag + 's';
+          setSearchedMain(mainData[tagWithS].items[0]);
+
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (searchValue) {
+      fetchData();
     }
-  
-  }, [searchValue]);
+
+    if (searchedMain){
+      console.log(searchedMain)
+    }
+  }, [searchValue, tag]);
 
   const setInputValue = (input) => {
     setSearchValue(input.target.value);
@@ -62,7 +97,6 @@ const Search = () => {
   function handleTag(type){
     setTag(type)
   }
-
 
   return (
     <div className={styles.container}>
@@ -91,16 +125,16 @@ const Search = () => {
           className={styles.input}
         />
       </div>
-      {!searchedAlbums ? (
+      {loading ? (
         <div>Loading...</div>
       ) : (
         <div className={styles.resultsContainer}>
           <div className={styles.topResults}>
             <h2>Top Results</h2>
             <div>
-              {/* <img src="" alt="" /> */}
-              <h3>{searchedAlbums.tracks.items[0].artists[0].name}</h3>
-              <h4>Artist</h4>
+              <img src="" alt="" />
+              <h3>{searchedMain.name}</h3>
+              <h4>{capitolTag}</h4>
             </div>
           </div>
           <div className={styles.songs}>

@@ -18,9 +18,6 @@ import { DataContext } from '../context/DataContext.tsx';
 
 const Nav = ({scrollPosition}) => {
   const { profile } = useContext(DataContext);
-
-  console.log(scrollPosition)
-
   const navigate = useNavigate();
 
   function handleNavBack() {

@@ -49,3 +49,8 @@ export const formatCopyright = (copyright: string, type: string) => {
 export const formatQuery = (query: string) => {
   return encodeURIComponent(query).toLowerCase();
 };
+
+// takes a string and makes first letter a capitol
+export const capitaliseFirstLetter = (str : string) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
