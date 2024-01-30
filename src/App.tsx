@@ -13,6 +13,7 @@ import { AudioContext } from './context/AudioContext.tsx';
 import { DataContext } from './context/DataContext.tsx';
 
 import audioReducer from './context/AudioReducer.tsx';
+import UserProvider from './context/UserProvider.tsx';
 
 import {
   redirectToAuthCodeFlow,
@@ -25,8 +26,40 @@ import {
   fetchArtists,
 } from './api/Spotify.tsx'; // Import your Spotify-related functions
 
+// const profileData = await fetchProfile(accessToken);
+          // if (profileData.display_name) {
+          //   setProfile(profileData);
+          // }
+
+          // const playlistsData = await fetchPlaylists(accessToken);
+          // if (playlistsData.total) {
+          //   setPlaylists(playlistsData);
+          // }
+
+          // const recentsData = await fetchRecents(accessToken);
+          // if (recentsData.limit) {
+          //   setRecents(recentsData);
+          // }
+
+          // const episodesData = await fetchEpisodes(accessToken);
+          // if (episodesData.href) {
+          //   setEpisodes(episodesData);
+          // }
+
+          // const albumsData = await fetchAlbums(accessToken);
+          // if (albumsData.href) {
+          //   setAlbums(albumsData);
+          // }
+
+          // const artistsData = await fetchArtists(accessToken);
+          // if (artistsData.name) {
+          //   setArtists(artistsData);
+          // }
+
+          // window.history.pushState({}, null, '/');
+
 function App() {
-  const [profile, setProfile] = useState(null);
+  // const [profile, setProfile] = useState(null);
   const [playlists, setPlaylists] = useState(null);
   const [recents, setRecents] = useState(null);
   const [episodes, setEpisodes] = useState({});
@@ -46,41 +79,7 @@ function App() {
       } else {
         try {
           const accessToken: string = await getAccessToken(clientId, code);
-          if (accessToken) {
-            setToken(accessToken);
-          }
-
-          const profileData = await fetchProfile(accessToken);
-          if (profileData.display_name) {
-            setProfile(profileData);
-          }
-
-          const playlistsData = await fetchPlaylists(accessToken);
-          if (playlistsData.total) {
-            setPlaylists(playlistsData);
-          }
-
-          const recentsData = await fetchRecents(accessToken);
-          if (recentsData.limit) {
-            setRecents(recentsData);
-          }
-
-          const episodesData = await fetchEpisodes(accessToken);
-          if (episodesData.href) {
-            setEpisodes(episodesData);
-          }
-
-          const albumsData = await fetchAlbums(accessToken);
-          if (albumsData.href) {
-            setAlbums(albumsData);
-          }
-
-          const artistsData = await fetchArtists(accessToken);
-          if (artistsData.name) {
-            setArtists(artistsData);
-          }
-
-          window.history.pushState({}, null, '/');
+          window.sessionStorage.setItem("token", JSON.stringify(accessToken));         
         } catch (error) {
           console.log(error);
         } finally {
@@ -102,20 +101,19 @@ function App() {
   const [state, dispatch] = useReducer(audioReducer, initialState);
 
   return (
-    <Router>
+    <UserProvider>
+      <Router>
       <div>
         {loading ? (
           <div>Loading...</div>
         ) : (
           <DataContext.Provider
             value={{
-              profile,
               playlists,
               recents,
               episodes,
               albums,
               artists,
-              token,
             }}
           >
             <AudioContext.Provider value={{ state, dispatch }}>
@@ -132,6 +130,7 @@ function App() {
         )}
       </div>
     </Router>
+    </UserProvider>
   );
 }
 
